@@ -19,7 +19,8 @@ def assign_classes(binary_numbers):
   return class_labels
 
 # Generate 2^10 binary numbers of 10 bits
-binary_numbers = generate_binary_numbers(10)
+bit_size = 10
+binary_numbers = generate_binary_numbers(bit_size)
 
 # print(binary_numbers)
 # Extract the individual bits into a new list
@@ -29,9 +30,12 @@ for binary_number in binary_numbers:
 
 # print(bits)
 class_labels = assign_classes(binary_numbers)
-print(class_labels)
+# print(class_labels)
 # Create a pandas DataFrame
+
+
 df = pd.DataFrame({
+ 
     "bit_0": [i[0] for i in bits],
     "bit_1": [i[1] for i in bits],
     "bit_2": [i[2] for i in bits],
@@ -42,8 +46,12 @@ df = pd.DataFrame({
     "bit_7": [i[7] for i in bits],
     "bit_8": [i[8] for i in bits],
     "bit_9": [i[9] for i in bits],
-    "class": class_labels
+    "class": class_labels,
+
 })
 
 # Save the DataFrame to an Excel file
-df.to_excel("binary_numbers.xlsx", index=False)
+# df.to_excel("binary_numbers.xlsx", index=False)
+
+df.to_csv(f'new_data_{bit_size}_bits.csv', index = False, encoding='utf-8') # False: not include index
+# print(df)

@@ -1,7 +1,7 @@
 import pandas as pd
 import random
 
-df = pd.read_csv('./binary_numbers_csv.csv')
+df = pd.read_csv('./new_data_10_bits.csv')
 # print(df.head())
 
 columns = df.columns
@@ -64,3 +64,15 @@ if False in res:
     print(False)
 else:
     print(True)
+
+
+query = list(map(int,input("enter 10 bits sequence: ").split()))[:10]
+if query:
+    total = query*weights
+
+    if sum(total)>=threshold:
+        print("class 1")
+    else:
+        print("Class 0")
+else:
+    pass
