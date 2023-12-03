@@ -1,4 +1,7 @@
 import numpy as np
+import matplotlib.pyplot as plt
+
+epoch_losses = []
 
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
@@ -37,8 +40,9 @@ def train(X, Y, W1, b1, W2, b2, epochs=3000, learning_rate=0.1):
         # Calculate the loss
         loss = np.mean(np.power(E, 2))
 
-        if epoch % 1000 == 0:
+        if epoch % 300 == 0:
             print(f"Epoch {epoch}: loss = {loss}")
+        epoch_losses.append(loss)
 
 # Prepare the training data
 X = np.array([[0, 0, 0],[0, 0, 1],[0, 1, 0],[0, 1, 1],
@@ -64,4 +68,22 @@ _, predictions = forward(X, W1, b1, W2, b2)
 for i in range(len(predictions)):
     predictions[i] = predictions[i].round()
     
-print(predictions==Y)
+def calculate_accuracy(predictions, labels):
+    correct_predictions = np.sum(predictions == labels)
+    total_samples = len(labels)
+    accuracy = correct_predictions / total_samples
+    return accuracy
+
+
+def plot_loss_curve(loss_values):
+    plt.plot(loss_values, label='Training Loss')
+    plt.xlabel('Epoch')
+    plt.ylabel('Loss')
+    plt.title('Epoch Loss Curve')
+    plt.legend()
+    plt.show()
+    
+# Calculate and print accuracy
+accuracy = calculate_accuracy(predictions, Y)
+print(f"Accuracy: {accuracy}")
+plot_loss_curve(epoch_losses)

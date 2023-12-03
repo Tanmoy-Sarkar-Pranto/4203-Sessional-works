@@ -1,0 +1,82 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+
+\PYG{k+kn}{import} \PYG{n+nn}{numpy} \PYG{k}{as} \PYG{n+nn}{np}
+\PYG{k+kn}{import} \PYG{n+nn}{matplotlib.pyplot} \PYG{k}{as} \PYG{n+nn}{plt}
+
+\PYG{n}{epoch\PYGZus{}losses} \PYG{o}{=} \PYG{p}{[]}
+
+\PYG{k}{def} \PYG{n+nf}{sigmoid}\PYG{p}{(}\PYG{n}{x}\PYG{p}{):}
+    \PYG{k}{return} \PYG{l+m+mi}{1} \PYG{o}{/} \PYG{p}{(}\PYG{l+m+mi}{1} \PYG{o}{+} \PYG{n}{np}\PYG{o}{.}\PYG{n}{exp}\PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{n}{x}\PYG{p}{))}
+
+\PYG{k}{def} \PYG{n+nf}{forward}\PYG{p}{(}\PYG{n}{X}\PYG{p}{,} \PYG{n}{W1}\PYG{p}{,} \PYG{n}{b1}\PYG{p}{,} \PYG{n}{W2}\PYG{p}{,} \PYG{n}{b2}\PYG{p}{):}
+    \PYG{n}{z1} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{dot}\PYG{p}{(}\PYG{n}{X}\PYG{p}{,} \PYG{n}{W1}\PYG{p}{)} \PYG{o}{+} \PYG{n}{b1}
+    \PYG{n}{a1} \PYG{o}{=} \PYG{n}{sigmoid}\PYG{p}{(}\PYG{n}{z1}\PYG{p}{)}
+
+    \PYG{n}{z2} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{dot}\PYG{p}{(}\PYG{n}{a1}\PYG{p}{,} \PYG{n}{W2}\PYG{p}{)} \PYG{o}{+} \PYG{n}{b2}
+    \PYG{n}{a2} \PYG{o}{=} \PYG{n}{sigmoid}\PYG{p}{(}\PYG{n}{z2}\PYG{p}{)}
+
+    \PYG{k}{return} \PYG{n}{a1}\PYG{p}{,} \PYG{n}{a2}
+
+\PYG{k}{def} \PYG{n+nf}{train}\PYG{p}{(}\PYG{n}{X}\PYG{p}{,} \PYG{n}{Y}\PYG{p}{,} \PYG{n}{W1}\PYG{p}{,} \PYG{n}{b1}\PYG{p}{,} \PYG{n}{W2}\PYG{p}{,} \PYG{n}{b2}\PYG{p}{,} \PYG{n}{epochs}\PYG{o}{=}\PYG{l+m+mi}{3000}\PYG{p}{,} \PYG{n}{learning\PYGZus{}rate}\PYG{o}{=}\PYG{l+m+mf}{0.1}\PYG{p}{):}
+    \PYG{k}{for} \PYG{n}{epoch} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n}{epochs}\PYG{p}{):}
+        \PYG{n}{A1}\PYG{p}{,} \PYG{n}{A2} \PYG{o}{=} \PYG{n}{forward}\PYG{p}{(}\PYG{n}{X}\PYG{p}{,} \PYG{n}{W1}\PYG{p}{,} \PYG{n}{b1}\PYG{p}{,} \PYG{n}{W2}\PYG{p}{,} \PYG{n}{b2}\PYG{p}{)}
+
+        \PYG{n}{E} \PYG{o}{=} \PYG{n}{Y} \PYG{o}{\PYGZhy{}} \PYG{n}{A2}
+
+        \PYG{n}{delta2} \PYG{o}{=} \PYG{n}{E} \PYG{o}{*} \PYG{p}{(}\PYG{n}{A2} \PYG{o}{*} \PYG{p}{(}\PYG{l+m+mi}{1} \PYG{o}{\PYGZhy{}} \PYG{n}{A2}\PYG{p}{))}
+
+        \PYG{n}{delta1} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{dot}\PYG{p}{(}\PYG{n}{delta2}\PYG{p}{,} \PYG{n}{W2}\PYG{o}{.}\PYG{n}{T}\PYG{p}{)} \PYG{o}{*} \PYG{p}{(}\PYG{n}{A1} \PYG{o}{*} \PYG{p}{(}\PYG{l+m+mi}{1} \PYG{o}{\PYGZhy{}} \PYG{n}{A1}\PYG{p}{))}
+
+        \PYG{n}{W2} \PYG{o}{+=} \PYG{n}{learning\PYGZus{}rate} \PYG{o}{*} \PYG{n}{np}\PYG{o}{.}\PYG{n}{dot}\PYG{p}{(}\PYG{n}{A1}\PYG{o}{.}\PYG{n}{T}\PYG{p}{,} \PYG{n}{delta2}\PYG{p}{)}
+        \PYG{n}{b2} \PYG{o}{+=} \PYG{n}{learning\PYGZus{}rate} \PYG{o}{*} \PYG{n}{np}\PYG{o}{.}\PYG{n}{sum}\PYG{p}{(}\PYG{n}{delta2}\PYG{p}{,} \PYG{n}{axis}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{)}
+        \PYG{n}{W1} \PYG{o}{+=} \PYG{n}{learning\PYGZus{}rate} \PYG{o}{*} \PYG{n}{np}\PYG{o}{.}\PYG{n}{dot}\PYG{p}{(}\PYG{n}{X}\PYG{o}{.}\PYG{n}{T}\PYG{p}{,} \PYG{n}{delta1}\PYG{p}{)}
+        \PYG{n}{b1} \PYG{o}{+=} \PYG{n}{learning\PYGZus{}rate} \PYG{o}{*} \PYG{n}{np}\PYG{o}{.}\PYG{n}{sum}\PYG{p}{(}\PYG{n}{delta1}\PYG{p}{,} \PYG{n}{axis}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{)}
+
+        \PYG{n}{loss} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{power}\PYG{p}{(}\PYG{n}{E}\PYG{p}{,} \PYG{l+m+mi}{2}\PYG{p}{))}
+
+        \PYG{k}{if} \PYG{n}{epoch} \PYG{o}{\PYGZpc{}} \PYG{l+m+mi}{300} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{:}
+            \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+sa}{f}\PYG{l+s+s2}{\PYGZdq{}Epoch }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{epoch}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s2}{: loss = }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{loss}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{)}
+            \PYG{n}{epoch\PYGZus{}losses}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{loss}\PYG{p}{)}
+
+\PYG{n}{X} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{([[}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{],[}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{],[}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{],[}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{],}
+    \PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{],[}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{],[}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{],[}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{]}
+\PYG{p}{])}
+\PYG{n}{Y} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{([}
+    \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{],[}\PYG{l+m+mi}{1}\PYG{p}{],[}\PYG{l+m+mi}{1}\PYG{p}{],[}\PYG{l+m+mi}{0}\PYG{p}{],}
+    \PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{],[}\PYG{l+m+mi}{0}\PYG{p}{],[}\PYG{l+m+mi}{0}\PYG{p}{],[}\PYG{l+m+mi}{1}\PYG{p}{]}
+\PYG{p}{])}
+
+\PYG{n}{W1} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{random}\PYG{o}{.}\PYG{n}{randn}\PYG{p}{(}\PYG{n}{X}\PYG{o}{.}\PYG{n}{shape}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{],} \PYG{l+m+mi}{4}\PYG{p}{)}
+\PYG{n}{b1} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{random}\PYG{o}{.}\PYG{n}{randn}\PYG{p}{(}\PYG{l+m+mi}{4}\PYG{p}{)}
+\PYG{n}{W2} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{random}\PYG{o}{.}\PYG{n}{randn}\PYG{p}{(}\PYG{l+m+mi}{4}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)}
+\PYG{n}{b2} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{random}\PYG{o}{.}\PYG{n}{randn}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{)}
+
+\PYG{n}{train}\PYG{p}{(}\PYG{n}{X}\PYG{p}{,} \PYG{n}{Y}\PYG{p}{,} \PYG{n}{W1}\PYG{p}{,} \PYG{n}{b1}\PYG{p}{,} \PYG{n}{W2}\PYG{p}{,} \PYG{n}{b2}\PYG{p}{)}
+
+\PYG{n}{\PYGZus{}}\PYG{p}{,} \PYG{n}{predictions} \PYG{o}{=} \PYG{n}{forward}\PYG{p}{(}\PYG{n}{X}\PYG{p}{,} \PYG{n}{W1}\PYG{p}{,} \PYG{n}{b1}\PYG{p}{,} \PYG{n}{W2}\PYG{p}{,} \PYG{n}{b2}\PYG{p}{)}
+\PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{predictions}\PYG{p}{)):}
+    \PYG{n}{predictions}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{=} \PYG{n}{predictions}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{.}\PYG{n}{round}\PYG{p}{()}
+
+\PYG{k}{def} \PYG{n+nf}{calculate\PYGZus{}accuracy}\PYG{p}{(}\PYG{n}{predictions}\PYG{p}{,} \PYG{n}{labels}\PYG{p}{):}
+    \PYG{n}{correct\PYGZus{}predictions} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{sum}\PYG{p}{(}\PYG{n}{predictions} \PYG{o}{==} \PYG{n}{labels}\PYG{p}{)}
+    \PYG{n}{total\PYGZus{}samples} \PYG{o}{=} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{labels}\PYG{p}{)}
+    \PYG{n}{accuracy} \PYG{o}{=} \PYG{n}{correct\PYGZus{}predictions} \PYG{o}{/} \PYG{n}{total\PYGZus{}samples}
+    \PYG{k}{return} \PYG{n}{accuracy}
+
+
+\PYG{k}{def} \PYG{n+nf}{plot\PYGZus{}loss\PYGZus{}curve}\PYG{p}{(}\PYG{n}{loss\PYGZus{}values}\PYG{p}{):}
+    \PYG{n}{plt}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{(}\PYG{n}{loss\PYGZus{}values}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}Training Loss\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{plt}\PYG{o}{.}\PYG{n}{xlabel}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}Epoch\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{plt}\PYG{o}{.}\PYG{n}{ylabel}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}Loss\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{plt}\PYG{o}{.}\PYG{n}{title}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}Epoch Loss Curve\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{plt}\PYG{o}{.}\PYG{n}{legend}\PYG{p}{()}
+    \PYG{n}{plt}\PYG{o}{.}\PYG{n}{show}\PYG{p}{()}
+
+\PYG{n}{accuracy} \PYG{o}{=} \PYG{n}{calculate\PYGZus{}accuracy}\PYG{p}{(}\PYG{n}{predictions}\PYG{p}{,} \PYG{n}{Y}\PYG{p}{)}
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+sa}{f}\PYG{l+s+s2}{\PYGZdq{}Accuracy: }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{accuracy}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{plot\PYGZus{}loss\PYGZus{}curve}\PYG{p}{(}\PYG{n}{epoch\PYGZus{}losses}\PYG{p}{)}
+
+
+    \PYG{p}{\PYGZcb{}}
+
+\end{Verbatim}
