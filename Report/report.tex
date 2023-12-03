@@ -207,7 +207,7 @@ def train(X, Y, W1, b1, W2, b2, epochs=3000, learning_rate=0.1):
 
         if epoch % 300 == 0:
             print(f"Epoch {epoch}: loss = {loss}")
-            epoch_losses.append(loss)
+        epoch_losses.append(loss)
 
 X = np.array([[0, 0, 0],[0, 0, 1],[0, 1, 0],[0, 1, 1],
     [1, 0, 0],[1, 0, 1],[1, 1, 0],[1, 1, 1]
