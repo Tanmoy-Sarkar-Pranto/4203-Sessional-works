@@ -44,7 +44,7 @@ def screenshot_to_publication(screenshot_path, output_path, target_width, ppi=30
   image.save(output_path, quality=95)  # Adjust quality as needed
 
 # Example usage
-screenshot_path = "./Screenshot (142)_1.png"
+screenshot_path = "./Screenshot (143)_1.png"
 output_path = "publication_ready_SS(142)_1.jpg"
 target_width = 1000  # Adjust as needed
 

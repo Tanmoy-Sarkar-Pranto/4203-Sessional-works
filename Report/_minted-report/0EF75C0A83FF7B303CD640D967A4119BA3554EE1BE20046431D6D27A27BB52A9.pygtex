@@ -77,6 +77,4 @@
 \PYG{n}{plot\PYGZus{}loss\PYGZus{}curve}\PYG{p}{(}\PYG{n}{epoch\PYGZus{}losses}\PYG{p}{)}
 
 
-    \PYG{p}{\PYGZcb{}}
-
 \end{Verbatim}

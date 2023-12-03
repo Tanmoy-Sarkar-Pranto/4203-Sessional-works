@@ -19,7 +19,7 @@
     
     \begin{center}
         \vspace*{0.2cm}
-         \fontsize{15}{17} \bfseries {Rajshahi University of Engineering \& Technology}
+         \fontsize{17}{17} \bfseries {Rajshahi University of Engineering \& Technology}
          
         \fontsize{15}{17} \bfseries {Department of Computer Science \& Engineering}
         
@@ -32,16 +32,16 @@
         {\textbf{Course No :}  CSE 4204}
         
         {\textbf{Course title :} Sessional based on  CSE 4203}\\
-         \noindent {Date : 04-12-2023}
+         \noindent {\textbf{Date :} 04-12-2023}
          }
-        \vspace*{2.2cm}
+        \vspace*{1.7cm}
     \end{center}
 
     \begin{center}
-        \fontsize{15}{17} \noindent {\textbf{Experiment No. : }}\large{03}
+        \fontsize{15}{17} \noindent {\textbf{Experiment No. : }}\Large{03}
         \vspace{0.2cm}
     
-        \fontsize{15}{17} \noindent {\textbf{Name of the experiment : }}\large{Design and Apply Multi-layer Neural Networks algorithm.}
+        \fontsize{15}{17} \noindent {\textbf{Name of the experiment : }}\Large{Design and Apply Multi-layer Perceptron Algorithm.}
         
         \vspace{1.4cm}
         \fontsize{15}{17} \noindent {\textbf{Submitted By :}}
@@ -91,7 +91,7 @@
         \noindent
         \large{
         The Multilayer Perceptron (MLP) is a fundamental building block of deep learning, capable of solving complex classification and regression tasks. \\ 
-        \noindent  Here's a breakdown of its theory and key concepts:}
+        \noindent  Some of the key concepts of MLP are:}
 
 
 
@@ -150,18 +150,17 @@
     \end{flushleft}
 
     \section{\fontsize{15}{17}{\noindent \textbf{Algorithm}}}
-    \begin{flushleft}
 
-
+\textbf{Steps:}
+\begin{enumerate}
 \large {
-\textbf{Steps:}\\
-\vspace{0.5cm}
-1. Initialize weigths, biases and learning rate\\
-2. Present inputs and desired outputs (dataset)\\
-3. Calculate actual output\\
-4. Calculate error\\
-5. Adapt weights with backpropagation\\}
-\end{flushleft}
+\item Initialize weigths, biases and learning rate
+\item Present inputs and desired outputs (dataset)
+\item Calculate actual output
+\item Calculate error
+\item Adapt weights with backpropagation}
+\end{enumerate}
+
 
     	 
     \vspace{0.5cm}
@@ -247,8 +246,6 @@ accuracy = calculate_accuracy(predictions, Y)
 print(f"Accuracy: {accuracy}")
 plot_loss_curve(epoch_losses)
 
-
-    }
     
     \end{minted}
 
@@ -261,7 +258,7 @@ plot_loss_curve(epoch_losses)
 
     \section{\fontsize{15}{17}{\noindent \textbf{Discussion}}}
 
-    \noindent The implemented Multilayer Perceptron achieved 100\% in the 3 bit X-OR dataset. From the epoch-loss curve we can see the curve starts around 0.4 initially and decreases rapidly. This suggests the model quickly learned basic patterns in the data. After nearly 2500 epochs the loss is nearly 0 (0.05), which means the model converges to the problem properly. Overall, the Multi Layer Perceptron successfully solved the X-OR problem. . 
+    \noindent The implemented Multilayer Perceptron achieved 100\% in the 3 bit X-OR dataset. From the epoch-loss curve we can see the curve starts around 0.4 initially and decreases rapidly. This suggests the model quickly learned basic patterns in the data. After nearly 2500 epochs the loss is nearly 0 ($<0.05$), which means the model converges to the problem properly. Overall, the Multi Layer Perceptron successfully solved the X-OR problem. . 
 
 
 
